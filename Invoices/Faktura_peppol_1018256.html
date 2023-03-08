@@ -1,0 +1,518 @@
+﻿<!DOCTYPE html><html>
+  <head>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Faktura - PEPPOL BIS v3</title>
+    <style type="text/css">
+					/* http://nicolasgallagher.com/micro-clearfix-hack/ */
+					.cf:before,
+					.cf:after {
+					content: " ";
+					display: table;
+					}
+					.cf:after {
+					clear: both;
+					}
+					.cf { /*IE7*/
+					*zoom: 1;
+					}
+
+					* {
+					box-sizing: border-box;
+					}
+
+					body {
+					padding: 1em;
+					margin: 0;
+					min-width:   57em;
+					max-width: 1280px;
+					font-size: small;
+					font-family: Arial, Helvetica, sans-serif;
+					}
+
+					.gray-back {
+					background-color: #ddd;
+					}
+
+					p { margin: 0; }
+
+					ul.unstyled {
+					list-style-type: none;
+					padding: 0;
+					margin: 0;
+					}
+
+					.captioned > *:first-child {
+					font-size: larger;
+					text-decoration: underline;
+					}
+
+					table.keyvaluepairs {
+					text-align: left;
+					}
+
+					table > caption {
+					text-align: left;
+					caption-side: top;
+					font-weight: bold;
+					margin-left: 2px;
+					padding-bottom: .3em;
+					}
+
+					.tbl-disp {
+					display: table;
+					border: 0;
+					border-collapse: collapse;
+					border-spacing: 0;
+					}
+
+					.row  { display: table-row; }
+
+					.cell
+					{
+					display: table-cell;
+					padding-top: 0.15em;
+					vertical-align: top;
+					}
+
+					.cell.center {
+					margin: auto;
+					}
+
+					.fit-content {
+					display: inline-block;
+					margin: auto;
+					}
+
+					.fit-parent {
+					display: block;
+					}
+
+					.row-header {
+					border-bottom: 1px solid #888;
+					font-weight: bold;
+					color: #888;
+					text-transform: uppercase;
+					padding: 3px 4px;
+					vertical-align: top;
+					}
+
+					.row-header.row:hover {
+					background-color: transparent;
+					}
+
+					.pad-large {
+					padding-left:  50px;
+					padding-right: 50px;
+					}
+
+					.pad-medium {
+					padding-left:  30px;
+					padding-right: 30px;
+					}
+
+					.pad-right-medium {
+					padding-right: 20px;
+					}
+
+					.vspace { margin-top: 1.7em; }
+					.hspace {
+					width: 3em;
+					height: 1px;
+					}
+					.top { vertical-align: top; }
+					.fl-right { float: right; }
+					.fl-left  { float: left; }
+					.fl-both  { width: 100%; }
+					div.fl-both { display: inline-block; }
+
+					.abs-left {
+					position: absolute;
+					}
+					.abs-right {
+					position: absolute;
+					left: 100%;
+					margin-left: -175px;
+					}
+
+					.single-border {
+					border: 1px solid #ccc;
+					}
+
+					.full-width {
+					width: 100%;
+					}
+
+					.line-note {
+					padding-bottom: 1em !important;
+					color: #888;
+					font-style: italic;
+					}
+
+					.line-vat-exemption {
+					color: #888;
+					font-style: italic;
+					font-size: 12px;
+					padding-top: 0px !important;
+					}
+
+					#header > #parties > table {
+					margin-bottom: 1.4em;
+					}
+					#header > #info > ul {
+					margin-top: 13px;
+					}
+					#header > #parties > table:last-child {
+					margin-bottom: 0;
+					}
+
+					table.grid, table.grid * {
+					border: 0;
+					border-collapse: collapse;
+					border-spacing: 0;
+					}
+					table.grid>*>tr>th,
+					table.grid>*>tr>td {
+					padding: 3px 4px;
+					vertical-align: top;
+					}
+					table.grid>thead {
+					}
+					table.grid>thead>tr>th {
+					font-weight:bold;
+					color: #888;
+					text-transform: uppercase;
+					border-bottom: 1px solid #888;
+					}
+					table.grid>tfoot.sum>tr>td:first-of-type {
+					text-align: right;
+					}
+					table.grid>tfoot.sum>tr>td:last-of-type {
+					text-align: right;
+					font-weight: bold;
+					}
+
+					.grid tbody>tr:hover,
+					.grid .row:hover {
+					background-color: #D1EEF5;
+					}
+					.grid tfoot>tr:hover {
+					background-color: #ACE0ED;
+					}
+					.grid tfoot>tr:hover,
+					.grid .right {
+					text-align: right;
+					padding-left: 1em;
+					}
+					.grid .center {
+					text-align: center;
+					padding-left: 1em;
+					padding-right: 1em;
+					}
+					.grid .left {
+					text-align: left;
+					padding-right: 1em;
+					}
+
+					.grid .small  { min-width:  4em; white-space: nowrap;}
+					.grid .medium { min-width:  6em;}
+					.grid .large  { min-width:  15em;}
+
+					.grid-in-grid,
+					.grid-in-grid tbody {
+					width: 100%;
+					border-spacing: initial;
+					border-collapse: collapse;
+					}
+					.grid-in-grid td {
+					padding-top: 0;
+					padding-bottom: 0;
+					}
+
+					#totals div.row:last-of-type:hover {
+					background-color: #ACE0ED;
+					}
+					#totals div.row:last-of-type > div.cell {
+					border-top:    1px solid;
+					}
+					#totals div.row:last-of-type > div.cell:last-of-type {
+					font-weight: bold;
+					}
+
+					#main
+					{
+					width: 100%;
+					}
+
+					.main-right
+					{
+					width: 33%;
+					padding: 15px;
+					}
+
+					.main-left
+					{
+					width: 67%;
+					}
+
+					.main-right, .main-left
+					{
+					vertical-align: top;
+					}
+
+					.notes-content
+					{
+					padding: 10px;
+					min-height: 40px;
+					border: 1px solid #ccc;
+					}
+
+					.item-fieldvalue
+					{
+					padding-right: 10px;
+					}
+
+				</style>
+  </head>
+  <body>
+    <table id="main">
+      <tr>
+        <td class="main-left">
+          <table class="keyvaluepairs">
+            <caption>GASSCO AS</caption>
+            <tr>
+              <td colspan="3">Postboks 5070 Majorstuen;</td>
+            </tr>
+            <tr>
+              <td colspan="3">0301 OSLO</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="height:.2em">
+              </td>
+            </tr>
+            <tr>
+              <td>Foretaksregisteret</td>
+              <td>:</td>
+              <td>983452841</td>
+            </tr>
+          </table>
+          <table></table>
+          <div class="vspace"></div>
+          <table class="keyvaluepairs">
+            <caption>Leveranse</caption>
+            <tr>
+              <td colspan="3">Karenslyst Alle 204723508100</td>
+            </tr>
+            <tr>
+              <td colspan="3">278 Oslo</td>
+            </tr>
+            <tr>
+              <td>Leveringsdato</td>
+              <td>:</td>
+              <td>05.03.2023</td>
+            </tr>
+          </table>
+          <div class="tbl-disp full-width">
+            <div class="cell pad-right-medium">
+              <div class="fit-content">
+                <div class="vspace fit-parent"></div>
+                <div class="vspace fit-parent"></div>
+                <div class="vspace fit-parent">
+                  <table class="grid full-width" border="1">
+                    <thead>
+                      <tr>
+                        <th class="left">MVA grunnlag</th>
+                        <th class="left">MVA</th>
+                        <th class="left">MVA beløp</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="right medium">25 000,00</td>
+                        <td class="center small">25 %</td>
+                        <td class="right medium">6 250,00</td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="sum">
+                      <tr>
+                        <td class="right" colspan="2">SUM Mva</td>
+                        <td class="right medium">6 250,00</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="cell pad-right-medium center">
+              <div class="vspace fit-parent">
+                <div id="totals" class="grid" style="display:table;">
+                  <div class="row">
+                    <div class="cell center row-header"></div>
+                    <div class="cell left medium row-header">SUM</div>
+                    <div class="cell center small row-header">VALUTA</div>
+                    <div class="cell right medium row-header">BELØP</div>
+                  </div>
+                  <div class="row">
+                    <div class="cell center">
+                    </div>
+                    <div class="cell left medium">Sum linjer</div>
+                    <div class="cell center small">NOK</div>
+                    <div class="cell right medium">25 000,00</div>
+                  </div>
+                  <div class="row">
+                    <div class="cell center">+</div>
+                    <div class="cell left medium">Sum mva</div>
+                    <div class="cell center small">NOK</div>
+                    <div class="cell right medium">6 250,00</div>
+                  </div>
+                  <div class="row">
+                    <div class="cell center">=</div>
+                    <div class="cell left medium">Totalbeløp</div>
+                    <div class="cell center small">NOK</div>
+                    <div class="cell right medium">31 250,00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="main-right gray-back">
+          <table class="keyvaluepairs">
+            <caption>Capgemini Norge AS</caption>
+            <tr>
+              <td colspan="3">Karenslyst Alle 204723508100</td>
+            </tr>
+            <tr>
+              <td colspan="3">278 Oslo</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="height:.2em">
+              </td>
+            </tr>
+            <tr>
+              <td>Foretaksregisteret</td>
+              <td>:</td>
+              <td>943574537</td>
+            </tr>
+          </table>
+          <table>
+            <tr>
+              <td>Kontakt</td>
+              <td>:</td>
+              <td>Rydningen, Jonny</td>
+            </tr>
+            <tr>
+              <td colspan="3">www.no.capgemini.com</td>
+            </tr>
+          </table>
+          <div class="vspace">
+            <table class="keyvaluepairs">
+              <caption style="font-weight: bold; font-size: x-large;">Faktura</caption>
+              <tr>
+                <td>Fakturanummer</td>
+                <td>:</td>
+                <td>13200110114137</td>
+              </tr>
+              <tr>
+                <td>Fakturadato</td>
+                <td>:</td>
+                <td>27.02.2023</td>
+              </tr>
+              <tr>
+                <td>Ordrenummer</td>
+                <td>:</td>
+                <td>
+                </td>
+              </tr>
+              <tr>
+                <td>Deres referanse</td>
+                <td>:</td>
+                <td>Paul Cleghorn</td>
+              </tr>
+              <tr>
+                <td>Kundenummer</td>
+                <td>:</td>
+                <td>983452841MVA</td>
+              </tr>
+            </table>
+          </div>
+          <div class="vspace">
+            <table class="keyvaluepairs">
+              <caption style="font-weight: bold;">BETALINGSINFORMASJON</caption>
+              <tr>
+                <td>Beløp</td>
+                <td>:</td>
+                <td>31 250,00</td>
+              </tr>
+              <tr>
+                <td>Valuta</td>
+                <td>:</td>
+                <td>NOK</td>
+              </tr>
+              <tr>
+                <td>Forfallsdato</td>
+                <td>:</td>
+                <td>29.03.2023</td>
+              </tr>
+              <tr>
+                <td>KID</td>
+                <td>:</td>
+                <td>132001101141379</td>
+              </tr>
+              <tr>
+                <td>Bankkonto/IBAN</td>
+                <td>:</td>
+                <td>90441014790</td>
+              </tr>
+            </table>
+          </div>
+          <div class="vspace">
+            <ul class="unstyled captioned">
+              <li>Betalingsbetingelser</li>
+              <li>Net Due in 30 Days. Interest rate 9,25%</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div id="notes" class="vspace"><span style="font-weight: bold;">Notat</span><div class="notes-content">PO 4500040021 SAP basis drift
+Billing reference: Paul Cleghorn<br></div>
+    </div>
+    <div id="lines" class="">
+      <div class="fl-both vspace">
+        <table class="grid fl-both" border="1">
+          <thead>
+            <tr>
+              <th class="left" colspan="2" title="Selgers Varenummer | Beskrivelse">Artikkel</th>
+              <th class="right" title="Referanse til en enkelt ordrelinje">Ordreref.</th>
+              <th class="right">Antall</th>
+              <th class="left">Enhet</th>
+              <th class="right" title="Pris pr. enhet eks. mva. og ink. andelsrabatter og andelsgebyrer">Enhetspris</th>
+              <th class="right" title="Linjebeløp eks. MVA">Nettobeløp</th>
+              <th class="left" title="Mva-prosentrate tilhørende linja som helhet">MVA</th>
+              <th class="right" title="Netto linjebeløp">Bruttobeløp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="left">100489913 Gassco SAP Basis Drift AM</td>
+              <td class="left large">SAP Basis drift - March 2023 - Fixed Fees</td>
+              <td class="right">100489913 Gassco SAP Basis Drift AM</td>
+              <td class="right">1</td>
+              <td class="left">C62</td>
+              <td class="right medium">25 000,00</td>
+              <td class="right medium">25 000,00</td>
+              <td class="center small">25%</td>
+              <td class="right medium">31 250,00</td>
+            </tr>
+          </tbody>
+          <tfoot class="sum">
+            <tr>
+              <td colspan="6" class="right">SUM Linjer</td>
+              <td class="right medium">25 000,00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
