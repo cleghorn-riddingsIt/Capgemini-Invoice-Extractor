@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 # Open the HTML file
 with open('Invoices\\Faktura_peppol_1018429.html', 'r',encoding='utf-8',newline='\n') as f:
     rawhtml = f.read()
-html=rawhtml.replace('\n','').replace('\xa0','')
+html=rawhtml.replace('\n','').replace('\xa0','')# cleans up the text and removes weird spaces
 
 
 #html=html.replace('\xa','')
