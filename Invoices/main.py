@@ -1,8 +1,12 @@
 from bs4 import BeautifulSoup
 
 # Open the HTML file
-with open('Invoices\\Faktura_peppol_1018428.html', 'r',encoding='utf-8') as f:
-    html = f.read()
+with open('Invoices\\Faktura_peppol_1018429.html', 'r',encoding='utf-8',newline='\n') as f:
+    rawhtml = f.read()
+html=rawhtml.replace('\n','').replace('\xa0','')
+
+
+#html=html.replace('\xa','')
 
 # Parse the HTML using Beautiful Soup
 soup = BeautifulSoup(html, 'html.parser')
