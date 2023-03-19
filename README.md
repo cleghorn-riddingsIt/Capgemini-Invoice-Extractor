@@ -24,7 +24,10 @@ This is the hours booked by a consultant for a given week on a given work item. 
 An example of the cell data for a charge item is
 ['026 RolesImplementation', 'RolesImplementation     Kumar, Ram 202306', '100491434 Gassco Forretningssupport', '29.21', 'HUR', '1409,00', '41156,89', '25%', '51446,11']
 
-The resultant class maye look like this
+The category row would look like this:
+['TP-10227 Create Composite Roles in GCU']
+
+The resultant class may look like this
 
 Summary:RolesImplementation
 Linked Work Item: Don't know yet. We would need to iterate to the next row to see if it has the above structure or not. If it doesn't it is most likely the Work Item
