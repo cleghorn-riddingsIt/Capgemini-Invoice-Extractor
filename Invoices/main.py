@@ -44,6 +44,7 @@ def extract_check_items(row: list) -> dict:
     check_items_row = {}
     consultant_details = str(row[1]).split()
     check_items_row['summary'] = consultant_details[0]
+    check_items_row['linkeditem'] = ""
     check_items_row['hours'] = convert_to_float(row[3])
     check_items_row['rate'] = convert_to_float(row[5])
     check_items_row['total_net'] = convert_to_float(row[6])
@@ -56,7 +57,6 @@ def extract_check_items(row: list) -> dict:
 
 def extract_invoice(invoice:Table,checkitems:Table)->Dict:
     invoice_dict={}
-    checkitems_dict={}
     linked_workitem_list=[]
     #extract the invoice details
     for i,row in enumerate(invoice.rows):
@@ -70,10 +70,10 @@ def extract_invoice(invoice:Table,checkitems:Table)->Dict:
         checkitem_list=checkitems.rows[i]
         list_length=len(checkitem_list)
         if list_length>1:
-            checkitems_dict=extract_check_items(checkitem_list)
+            invoice_dict['lineitems'+str(i)]=extract_check_items(checkitem_list)
         elif list_length==1:
             linked_workitem_list.extend([i,checkitem_list[0]])
-        invoice_dict['lineitems'+str(i)]=checkitems_dict
+        
     return (invoice_dict,linked_workitem_list)
 
 invoice_index=7     #any invoice information will be at index 7 in the table_objects 
@@ -99,5 +99,5 @@ for table in tables:
  
 #extract line items
 invoice,linked_items=extract_invoice(table_objects[invoice_index],table_objects[lineitems_index])
-
+#todo: add the lnked items to the rextracted list
 print(table_objects)
