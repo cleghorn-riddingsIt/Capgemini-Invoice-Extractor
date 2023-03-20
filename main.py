@@ -77,6 +77,12 @@ def extract_invoice(invoice:Table,checkitems:Table)->Dict:
     invoice_dict['Lineitems']=lineitems
     return (invoice_dict,linked_workitem_list)
 
+def update_linked_items(start_index:int,end_index:int,linked_item:str,line_items:Dict):
+    
+    for key,val in line_items.items():
+        
+
+
 invoice_index=7     #any invoice information will be at index 7 in the table_objects 
 lineitems_index=9   #any lines items information will be at index 9 in the table_objects 
 invoice={}
@@ -101,6 +107,8 @@ for table in tables:
 #extract line items
 invoice,linked_items=extract_invoice(table_objects[invoice_index],table_objects[lineitems_index])
 #todo: add the lnked items to the rextracted list
+index=0
 for lineitem in invoice['Lineitems']:
     print(lineitem['linkeditem'])
+    index=+1
 print(table_objects)
