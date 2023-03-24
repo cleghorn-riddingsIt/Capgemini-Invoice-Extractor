@@ -29,6 +29,65 @@ class Table:
         self.caption = caption
         self.rows = rows
 
+class LineItem:
+    def __init__(self, summary='', linked_item='', hours=0, rate=0, tax_rate=0,total_gross=0):
+        self._summary = summary
+        self._linked_item = linked_item
+        self._hours = hours
+        self._rate = rate
+        self._tax_rate = tax_rate
+        self._totalgross=total_gross
+    
+    def convert_to_float(self,value: str) -> float:
+        try:
+            cleaned_string = value.replace(",", ".").replace("%", "")
+            return float(cleaned_string)
+        except ValueError:
+            raise ValueError(f"{value} is not a valid float")
+       
+    
+    @property
+    def hours(self):
+        return self._hours
+    @hours.setter
+    def hours(self, value):
+        self._hours = convert_to_float(value)
+    @property
+    def rate(self):
+        return self._rate
+    @hours.setter
+    def hours(self, value):
+        self._rate = convert_to_float(value)
+    @property
+    def taxrate(self):
+        return self._taxrate
+    @hours.setter
+    def hours(self, value):
+        self._taxrate = convert_to_float(value)
+    @property
+    def totalgross(self):
+        return self._totalgross
+    @hours.setter
+    def hours(self, value):
+        self._totalgross = convert_to_float(value)
+        
+class Invoice:
+    def __init__(self, invoice_number='', invoice_date:datetime=None, po_number='', po_reference='', customer_number='',line_items=None):
+        self._invoice_number = invoice_number
+        self._invoice_date = invoice_date
+        self._po_number = po_number
+        self._po_reference= po_reference
+        self._customer_number = customer_number
+        self._line_items=line_items
+        
+    @property
+    def invoice_date(self):
+        return self._invoice_date
+    @invoice_date.setter
+    def hours(self, value):
+        self._invoice_date = datetime.strptime(value, "%d.%m.%Y").date()
+        
+
 def convert_to_float(value: str) -> float:
     try:
         cleaned_string = value.replace(",", ".").replace("%", "")
@@ -77,7 +136,7 @@ def extract_invoice(invoice:Table,checkitems:Table)->Dict:
     invoice_dict['Lineitems']=lineitems
     return (invoice_dict,linked_workitem_list)
 
-def update_line_item(start_index:int,end_index:int,line_items:Dict):
+def update_line_item(start_index:int,end_index:int,linked_item:str, line_items:Dict):
     tmp_index=0
     
     
@@ -86,7 +145,8 @@ def update_line_item(start_index:int,end_index:int,line_items:Dict):
 
 def update_linked_items(linked_items:list,line_items:Dict):
     for linked_item in linked_items:
-        print(linked_item)
+        stop_index=int(linked_item[0])
+        linked_item_text=str(linked_item[1])
         
 
 
