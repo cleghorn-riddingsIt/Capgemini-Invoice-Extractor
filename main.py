@@ -4,7 +4,7 @@ from dataclasses import field
 from dataclasses import asdict
 from datetime import datetime
 from typing import Dict
-
+from typing import List
 
 
 # Open the HTML file
@@ -22,21 +22,36 @@ soup = BeautifulSoup(html, 'html.parser')
 tables = soup.find_all('table')
 
 # Define a data class to represent a table
-from typing import List
+
 
 class Table:
     def __init__(self, caption: str, rows: List[List[str]]):
         self.caption = caption
         self.rows = rows
+        
+class Consultant:
+     def __init__(self, firstname='', lastname=''):
+         self._firstname=firstname
+         self._lastname=lastname
 
 class LineItem:
-    def __init__(self, summary='', linked_item='', hours=0, rate=0, tax_rate=0,total_gross=0):
+    _summary:str
+    _linked_item:str
+    _hours:float
+    _rate:float
+    _tax_rate:float
+    _totalgross:float
+    _consultant=Consultant
+    
+    def __init__(self, summary='', linked_item='', hours:float=0, rate:float=0, tax_rate:float=0,total_gross:float=0,consultant:Consultant=None):
         self._summary = summary
         self._linked_item = linked_item
         self._hours = hours
         self._rate = rate
         self._tax_rate = tax_rate
         self._totalgross=total_gross
+        self._consultant=consultant
+        
     
     def convert_to_float(self,value: str) -> float:
         try:
@@ -72,6 +87,12 @@ class LineItem:
         self._totalgross = convert_to_float(value)
         
 class Invoice:
+    _invoice_number:str
+    _invoice_date:datetime
+    _po_number:str
+    _po_reference:str
+    _customer_number:str
+    _line_items:List[LineItem]
     def __init__(self, invoice_number='', invoice_date:datetime=None, po_number='', po_reference='', customer_number='',line_items=None):
         self._invoice_number = invoice_number
         self._invoice_date = invoice_date
